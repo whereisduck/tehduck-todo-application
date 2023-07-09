@@ -1,0 +1,39 @@
+server:
+  forward-headers-strategy: framework
+
+spring:
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: validate
+    open-in-view: false
+  application:
+    name: todo-app
+  cloud:
+    aws:
+      region:
+        static: eu-central-1
+      sns:
+        enabled: false
+
+management:
+  metrics:
+    export:
+      cloudwatch:
+        enabled: true
+        namespace: theduck
+        step: 1m
+    tags:
+      environment: ${ENVIRONMENT_NAME}
+
+error:
+  handling:
+    exception-logging: WITH_STACKTRACE
+
+custom:
+  invitation-codes: DUKE, HELLO_WORLD # TODO: outsource them -> e.g. env variable or database
+  sharing-queue: theduck-todo-sharing
+  external-url: https://app.theduck.com
+  auto-confirm-collaborations: false
+  confirm-email-from-address: noreply@theduck.com
+  environment: ${ENVIRONMENT_NAME}
